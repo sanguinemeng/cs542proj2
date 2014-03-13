@@ -22,7 +22,7 @@ public class Logger {
 		BufferedWriter buffer = null;
 		
 		try {
-			file = new File(fileName);
+			file = new File(fileName+".backup");
 			writer = new FileWriter(file);
 			buffer = new BufferedWriter(writer);
 			buffer.write(fileContent);

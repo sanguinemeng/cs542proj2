@@ -1,9 +1,9 @@
 CS542 Design Patterns
 Spring 2014
-PROJECT 1 README FILE
+PROJECT 2 README FILE
 
-Due Date: Sunday, February 23, 2014
-Submission Date: Sunday, February 23, 2014
+Due Date: Thursday, March 13, 2014
+Submission Date: Thursday, March 13, 2014
 Grace Period Used This Project: 0 Days
 Grace Period Remaining: 0 Days
 Author(s): Lingjie Meng
@@ -13,8 +13,7 @@ e-mail(s): lmeng4@binghamton.edu
 PURPOSE:
 
 
-  Application of design patterns/principles for a simple multi-threaded
-  application.
+  Design a multi-threaded chat service.
 
 
 PERCENT COMPLETE:
@@ -22,16 +21,12 @@ PERCENT COMPLETE:
 
   I believe I have completed 100% of this project.
   
-  Reason to choose ArrayList data structure to store data that read by multiple
-  threads over vector: 1. Vector is form Java 1.1, it's thread safe, however slow;
-  2. Although ArrayList is not thread safe, but it can be thread safe by 
-  Collection.synchronizedList and it's faster than vector.
-
-
+  
 PARTS THAT ARE NOT COMPLETE:
 
 
-    None.
+    None.	// 1. have not handle port input boundary
+    		// 2. cannot delete *.backup(solved)
 
 
 BUGS:
@@ -43,27 +38,14 @@ BUGS:
 FILES:
 
 
-  Included with this project are 19 files:
-  
-  Info.java, the interface of StudentInfo
-  StudentInfo.java, the elements of a record from dataFile
-  Store.java, the interface of data structure that stores data of dataFile
-  RegistrationStore.java, the data structure to store registration data
-  Reader.java, the interface to read file
-  ReaderFile.java, responsible to read data from files
-  Worker.java, the interface to generates multiple threads
-  PopulateWorker.java, the file that reads data from dataFile with multi-thread
-  SearchWorker.java, the file that reads data from searchFile with multi-thread
-  ExceptionHandler.java, interface that handles exceptions
-  ExceptionHandlerImp.java, the file that implements ExceptionHandler
-  Logger.java, the file that debugs code with different debug values
-  Driver.java, the driver file
-  Results.java, the file that stores the search results
+  Included with this project are 17 files:
+
+  Logger.java, the file that stores the chat history of a client to a file
+  ClientDriver.java the client driver file
+  ServerDriver.java, the server driver file
   README.txt, the text file you are presently reading
   build.xml, the buildfile
-  filegenerator.sh, script file to generate dataFile
-  dataFile, file contains the registration information
-  searchFile, contains words to be searched
+  run.sh, script file to run the drivers
 
 
 SAMPLE OUTPUT:

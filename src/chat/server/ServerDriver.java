@@ -38,6 +38,7 @@ public class ServerDriver {
     	ServerThread serverThread = new ServerThread(port, threadPool);
 		Thread thread = new Thread(serverThread);
 		thread.start();
+		Scanner s = null;
 		
 		while(!quitLoop){
     		System.out.println("MENU:");
@@ -60,7 +61,7 @@ public class ServerDriver {
     			
     			{		
 	    			List<ServerHandler> handlers = serverThread.getHandlers();
-	    			Scanner s = new Scanner(System.in);
+	    			s = new Scanner(System.in);
 	    			String serverOutput = s.nextLine();
 	        		for (ServerHandler sh : handlers) {
 	        			if (!sh.isStopThread()) {
@@ -80,7 +81,7 @@ public class ServerDriver {
     				List<ServerHandler> handlers = serverThread.getHandlers();
     				for (ServerHandler sh : handlers) {
     					if (sh.getName().equals(name)) {
-    						Scanner s = new Scanner(System.in);
+    						s = new Scanner(System.in);
     						String serverOutput = s.nextLine();
     						sh.sendToClient(serverOutput);
     						break;
@@ -111,6 +112,10 @@ public class ServerDriver {
     		}
     	}
     	
+		if (s !=null) {
+			s.close();
+		}
+		
 		if (scanName != null) {
 			scanName.close();
 		}

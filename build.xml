@@ -1,22 +1,22 @@
-<project name="csRegs" default="compile" basedir=".">
+<project name="chat" default="compile" basedir=".">
 
   <property name="build.compiler" 	value="modern"/>
   <property name="src" 				value="src"/>
   <property name="BUILD" 			value="build"/>
   <property name="classes" 			value="${BUILD}/classes"/>
-  <property name="tarballFileName" 	value="meng_lingjie_assign1.tar.gz"/>
-  <property name="arg0" 			value="dataFile"/>
-  <property name="arg1"		 		value="3"/>
-  <property name="arg2" 			value="searchFile"/>
-  <property name="arg3" 			value="5"/>
-  <property name="arg4" 			value="4"/>
+  <property name="tarballFileName" 	value="meng_lingjie_assign2.tar.gz"/>
 
   <target name="compile"
-          depends="csRegs"/>
+          depends="chat"/>
 
   <target name="clean">
        <delete dir="${BUILD}"/>
        <delete file="./${tarballFileName}" quiet="true"/>
+       <delete> 
+		<fileset dir=".">
+		<include name="*.backup"/>
+		</fileset>
+       </delete>
   </target>
 
 
@@ -26,15 +26,15 @@
         <mkdir dir="${BUILD}"/>
         <mkdir dir="${classes}"/>
   </target>
-
+  
 
   <!-- ** means all subdirectories as well -->
   <!-- * means all files in the current directory -->
   <!-- for just java files use *.java -->
 
-  <target name="csRegs" depends="prepare">
+  <target name="chat" depends="prepare">
     <javac srcdir="${src}"
-           includes="csRegs/**"
+           includes="chat/**"
            excludes="**/package.html"
            destdir="${classes}"
            classpath="${classes}"
@@ -45,9 +45,14 @@
 
   <target name="jar" depends="compile">
         <mkdir dir="${BUILD}/jar"/>
-        <jar destfile="${BUILD}/jar/csRegs.jar" basedir="${BUILD}/classes">
+        <jar destfile="${BUILD}/jar/client.jar" basedir="${BUILD}/classes/client">
             <manifest>
-                <attribute name="Main-Class" value="csRegs.driver.Driver"/>
+                <attribute name="Client-Main-Class" value="chat.client.ClientDriver"/>
+            </manifest>
+        </jar>
+        <jar destfile="${BUILD}/jar/server.jar" basedir="${BUILD}/classes/server">
+            <manifest>
+                <attribute name="Server-Main-Class" value="chat.server.ServerDriver"/>
             </manifest>
         </jar>
   </target>
@@ -55,19 +60,9 @@
   <target name="tar">
   <tar destfile="./${tarballFileName}"
        basedir="." compression="gzip"
-       includes="${src}/**, build.xml, README.txt, ${arg0}, ${arg2}"/>
+       includes="${src}/**, build.xml, README.txt"/>
   </target>
 
-
-  <target name="run" depends="jar">
-        <java jar="${BUILD}/jar/csRegs.jar"  fork="true">
-	  		<arg value="${arg0}"/>
-         	<arg value="${arg1}"/>
-	  		<arg value="${arg2}"/>
-          	<arg value="${arg3}"/>
-          	<arg value="${arg4}"/>
-		</java>
-  </target>
 
   <target name="javadoc" >
       <mkdir dir="${BUILD}/javadoc"/>
