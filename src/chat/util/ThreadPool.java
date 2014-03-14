@@ -1,6 +1,3 @@
-/**
- * 
- */
 package chat.util;
 
 import java.util.Collections;
@@ -8,26 +5,26 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author lingjiemeng
- *
+ * thread pool of Singleton Pattern
  */
 public class ThreadPool {
 	private volatile static ThreadPool thrdPlInst;
-//	private int poolSize;
-	
-	/**
-	 * @return the poolSize
-	 */
-/*	public int getPoolSize() {
-		return poolSize;
-	}
-*/
+
+	// list of idle threads
 	private List<WorkerThread> idleThreads = 
 				Collections.synchronizedList(new LinkedList<WorkerThread>());
+
 	
+	/**
+	 * private constructor
+	 */
 	private ThreadPool(){
 	}
 
+	
+	/**
+	 * double-checked locking for Singleton
+	 */
 	public static ThreadPool getInstance(){
 		if(thrdPlInst == null){
 			synchronized(ThreadPool.class){
@@ -39,23 +36,34 @@ public class ThreadPool {
 		return thrdPlInst;
 	}
 	
+	
 	/**
-	 * @return 
-	 * 
+	 * borrow thread from idle thread list
 	 */
 	public synchronized WorkerThread borrowThread() {
-		// TODO Auto-generated constructor stub
 		if (idleThreads.isEmpty()) {
 			return null;
 		}
+		
+		// if there are idle threads available in the 
+		// list, get the first one from the list
 		return idleThreads.remove(0);
 	}
+
 	
+	/**
+	 * return idle threads
+	 * @param idleThread
+	 */
 	public synchronized void returnThread(WorkerThread idleThread) {
-		// TODO Auto-generated method stub
 		idleThreads.add(idleThread);
 	}
 	
+	
+	/**
+	 * new thread for a new client
+	 * @param serverHandler
+	 */
 	public void start(ServerHandler serverHandler){
 		if (!idleThreads.isEmpty()) {
 			WorkerThread borrowedThread = this.borrowThread();
@@ -66,37 +74,35 @@ public class ThreadPool {
 		}
 	}
 	
+	
+	
+	/**
+	 * worker thread for handler
+	 */
 	private class WorkerThread extends Thread {
 		private ServerHandler serverHandler;
-		// private boolean isIdle;
 		
+		/**
+		 * constructor
+		 * @param serverHandler
+		 */
 		public WorkerThread(ServerHandler serverHandler){
 			this.serverHandler = serverHandler;
 		}
 
-		/**
-		 * @return the isIdle
-		 */
-//		public boolean isIdle() {
-//			return isIdle;
-//		}
-		
 		
 		@Override
 		public void run() {
 			while(true){
-				// isIdle = false;
 				if (serverHandler!=null) {
 					serverHandler.run();	//core service
 				}
-				// isIdle = true;
 				thrdPlInst.returnThread(this);
 			
 				synchronized(this) {
 					try {
 						this.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						System.err.println(e.getMessage());
 						System.exit(1);
 					}
@@ -104,7 +110,9 @@ public class ThreadPool {
 			}
 		}
 		
-		public synchronized void setTask(ServerHandler serverHandler) {
+		
+		// set a new task to a newly borrowed thread
+		private synchronized void setTask(ServerHandler serverHandler) {
 			this.serverHandler = serverHandler;
 			this.notifyAll();
 		}

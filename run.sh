@@ -18,12 +18,6 @@ else
   JAVA=$JAVA_HOME/bin/java
 fi
 
-if [ ! "`$JAVA -version 2>&1 | grep "\ 1\.[456789]"`" ]; then 
-    echo Required 1.5 verion of JDK: can not use $JAVA
-    echo Current version is:
-    $JAVA -version
-    exit 1
-fi 
 
 #---------------------------------------------------------------------#
 TOP=.

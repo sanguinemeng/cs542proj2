@@ -1,12 +1,14 @@
-/**
- * 
- */
 package chat.util;
 
 /**
- * @author lingjiemeng
- *
+ * check data validation
  */
 public interface Checker {
-	public int check (String str);
+	
+	/**
+	 * check validation of input
+	 * @param str - all input arguments
+	 * @return validated data
+	 */
+	public int check (String ... str);
 }

@@ -25,8 +25,7 @@ PERCENT COMPLETE:
 PARTS THAT ARE NOT COMPLETE:
 
 
-    None.	// 1. have not handle port input boundary
-    		// 2. cannot delete *.backup(solved)
+    None.
 
 
 BUGS:
@@ -40,9 +39,20 @@ FILES:
 
   Included with this project are 17 files:
 
-  Logger.java, the file that stores the chat history of a client to a file
-  ClientDriver.java the client driver file
+  ClientDriver.java, the client driver file
   ServerDriver.java, the server driver file
+  ServerThread.java, the file to separate input and output of server
+  ThreadPool.java, the file of thread pool of singleton pattern
+  ServerHandler.java, the file handles multiple threads of server
+  ClientData.java, the file defines the data structure to store records
+  Searcher.java, the interface of NameSearcher.java
+  NameSearcher.java, the file to search and print online clients names
+  DeviceType.java, two types defined - server and client
+  Checker.java, the interface to check validation of input data
+  ArgumentChecker.java, the file to check if the argument is in correct format
+  MenuChecker.java, the file to check is the input menu index is valid
+  PortChecker.java, the file to check if the port number is out of boundary
+  Logger.java, the file that stores the chat history of a client to a file
   README.txt, the text file you are presently reading
   build.xml, the buildfile
   run.sh, script file to run the drivers
@@ -51,15 +61,21 @@ FILES:
 SAMPLE OUTPUT:
 
 
-  bingsuns2% ant run -Darg0=dataFile -Darg1=3 -Darg2=searchFile -Darg3=4 -Darg4=4
-  SOME OUTPUT
-  WAHT CONSTRUCTORS ARE CALLED
-  ===========Results from Driver===========
-  SEARCH RESULTS
-  BUILD SUCCESSFUL
-  Total time: 9 seconds
-  bingsuns2% 
+	server:
+		remote02:~/cs542/assign2/chat> ./run.sh server 9191
+		/usr/bin/java -cp ./build/classes:lib/*/*.jar: chat.server.ServerDriver 9191
+		MENU:
+		1. Broadcast
+		2. Send message to a client
+		3. Print message of a client
+		4. Quit
 
+	client:
+		remote02:~/cs542/assign2/chat> ./run.sh client localhost 9191
+		/usr/bin/java -cp ./build/classes:lib/*/*.jar: chat.client.ClientDriver localhost 9191
+		MENU:
+		1. Give me a name
+		2. Quit
 
 TO COMPILE:
 
@@ -70,14 +86,19 @@ TO COMPILE:
 TO RUN:
 
 
-  Please run as: ant run -Darg0=<DATAFILE> -Darg1=<THRDNUM1> -Darg2=<SRCHFILE> -Darg=<THRDNUM2> -Darg4=<DEBUGVALUE> 
-  For example:   ant run -Darg0=dataFile -Darg1=1 -Darg2=searchFile -Darg3=5 -Darg4=4
+  Please run as: 
+  		server: ./run.sh server portNumber
+  		client: ./run.sh client serverName portNumber
+  		 
+  For example:   
+		server: ./run.sh server 9191
+		client: ./run.sh client localhost 9191
 
 
 EXTRA CREDIT:
 
 
-  N/A
+  get both broadcasting message and send to a specific client working
 
 
 
@@ -87,9 +108,7 @@ This serves as evidence that we are in no way intending Academic Dishonesty.
 Lingjie Meng
 
 
-  * http://ant.apache.org/manual/using.html
-
-  * http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html
+  * http://www.cnblogs.com/phinecos/archive/2008/07/19/1246623.html
 
 
 ACKNOWLEDGEMENT:

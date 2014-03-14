@@ -1,6 +1,3 @@
-/**
- * 
- */
 package chat.util;
 
 import java.io.BufferedWriter;
@@ -9,13 +6,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * @author lingjiemeng
- *
+ * backup history records from clients
  */
 public class Logger {
-
+	
+	/**
+	 * private constructor
+	 */
 	private Logger(){}
 	
+	
+	/**
+	 * dump history records from clients to files
+	 * @param fileName - the name of client
+	 * @param fileContent - history records
+	 */
 	public static void dump(String fileName, String fileContent) {
 		File file;
 		FileWriter writer = null;

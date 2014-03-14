@@ -60,7 +60,7 @@
   <target name="tar">
   <tar destfile="./${tarballFileName}"
        basedir="." compression="gzip"
-       includes="${src}/**, build.xml, README.txt"/>
+       includes="${src}/**, build.xml, README.txt, run.sh"/>
   </target>
 
 
